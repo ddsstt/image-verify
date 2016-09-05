@@ -1,6 +1,6 @@
 # Synopsis
 
-Check PMG, JPG and EXR files for corruption.
+Check PNG, JPG and EXR files for corruption.
 
 # Dependencies
 
