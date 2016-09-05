@@ -20,11 +20,6 @@ import sys
 import argparse
 import os
 import logging
-logging.basicConfig(
-    # filename='image_verify.log',
-    level=logging.INFO,
-    format='%(asctime)20s %(msg_tag)16s  %(message)s'
-)
 
 openexr_enabled = False
 try:
@@ -98,6 +93,8 @@ def parse_args():
         description=__doc__,
     )
 
+    parser.add_argument('-v', '--verbose', help="Verbose output — show files opening and files that pass the checks", action='store_true')
+
     #   Add arguments below
     parser.add_argument('root_folder', help='Path to the root folder to check.')
 
@@ -106,6 +103,15 @@ def parse_args():
 
 def main():
     args = parse_args()
+    log_level = logging.WARN
+    if args.verbose:
+        log_level = logging.DEBUG
+
+    logging.basicConfig(
+        # filename='image_verify.log',
+        level=log_level,
+        format='%(asctime)20s %(msg_tag)16s  %(message)s'
+    )
 
     for image_path in iterate_images(args.root_folder):
         logging.info(image_path, extra={'msg_tag': 'OPEN_IMAGE'})
