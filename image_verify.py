@@ -57,8 +57,8 @@ def process_image(image_path):
         if image_path.lower().endswith('.exr') and openexr_enabled:
             if not OpenEXR.isOpenExrFile(image_path):
                 logging.warning('%s: OpenEXR could not read file', image_path, extra={'msg_tag': "EXR_ERROR"})
-            stats_counter["EXR_ERROR"] += 1
-            return
+                stats_counter["EXR_ERROR"] += 1
+                return
 
         # PIL-supported file formats
         else:
