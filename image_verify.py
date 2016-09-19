@@ -51,28 +51,26 @@ def process_image(image_path):
         # OpenEXR file check
         if image_path.lower().endswith('.exr') and openexr_enabled:
             if not OpenEXR.isOpenExrFile(image_path):
-                logging.warning('%s: OpenEXR could not read file', image_path, extra={'msg_tag': "EXR_ERROR"})
+                logging.warning("EXR_ERROR %s : OpenEXR could not read file", image_path)
                 stats_counter["EXR_ERROR"] += 1
                 return
 
         # PIL-supported file formats
         else:
-            img = Image.open(image_path)
             try:
+                img = Image.open(image_path)
                 _ = img.verify()
             except Exception as e:
-                logging.warning(image_path)
-                logging.warning('%s: %s', image_path, e, extra={'msg_tag': "PIL_ERROR"})
+                logging.warning('PIL_ERROR %s : %s', image_path, e)
                 stats_counter["PIL_ERROR"] += 1
                 return
 
     except Exception as e:
-        logging.warning(image_path)
-        logging.error('%s: %s', image_path, e, extra={'msg_tag': "OTHER_ERROR"})
+        logging.error('OTHER_ERROR %s: %s', image_path, e)
         stats_counter["OTHER_ERROR"] += 1
         return
 
-    logging.info(image_path, extra={'msg_tag': 'OK'})
+    logging.info("OK %s", image_path)
     stats_counter["OK"] += 1
 
 
@@ -110,11 +108,11 @@ def main():
     logging.basicConfig(
         # filename='image_verify.log',
         level=log_level,
-        format='%(asctime)20s %(msg_tag)16s  %(message)s'
+        format='%(asctime)20s %(message)s'
     )
 
     for image_path in iterate_images(args.root_folder):
-        logging.info(image_path, extra={'msg_tag': 'OPEN_IMAGE'})
+        logging.info("OPEN_IMAGE %s", image_path)
         # pool.apply_async(process_image, [image_path, ])
         process_image(image_path)
 
