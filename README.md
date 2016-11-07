@@ -1,6 +1,6 @@
 # Synopsis
 
-Check PNG, JPG and EXR files for corruption.
+Check image and video files for corruption.
 
 # Dependencies
 
